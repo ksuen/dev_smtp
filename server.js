@@ -17,10 +17,10 @@ app.post('/send-pdf-email', upload.single('pdf'), async (req, res) => {
 
     const transporter = nodemailer.createTransport({
       host: "sandbox.smtp.mailtrap.io",
-      port: 587,
+      port: 2525,
       auth: {
-        user: "YOUR_MAILTRAP_USERNAME",
-        pass: "YOUR_MAILTRAP_PASSWORD"
+        user: process.env.MAILTRAP_USER,
+        pass: process.env.MAILTRAP_PASS
       }
     });
 
@@ -28,7 +28,7 @@ app.post('/send-pdf-email', upload.single('pdf'), async (req, res) => {
     if (userEmail) recipients.push(userEmail);
 
     const info = await transporter.sendMail({
-      from: '"Dental Bot" <bot@synapsedental.com>',
+      from: '"Dental Pain Eraser" <info@synapsedental.com>',
       to: recipients.join(','),
       subject: "Your Competitor Analysis Report",
       text: userName
